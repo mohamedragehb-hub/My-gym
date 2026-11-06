@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101114">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MY GYM">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>MY GYM</title>
+<style>
+:root{color-scheme:dark;--bg:#0d0e11;--panel:#17191f;--panel2:#20232b;--line:#2b2e38;--txt:#f4f5f7;--muted:#9ca3af;--lime:#b7f36b;--blue:#82b7ff;--red:#ff7777}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;padding-bottom:calc(82px + env(safe-area-inset-bottom))}
+header{padding:calc(18px + env(safe-area-inset-top)) 18px 14px;background:linear-gradient(135deg,#171a20,#101114);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:4}
+.top{display:flex;align-items:center;justify-content:space-between}.brand{font-size:23px;font-weight:900;letter-spacing:1.5px}.brand span{color:var(--lime)}.sub{font-size:12px;color:var(--muted);margin-top:4px}
+.pill{border:1px solid #3a414c;color:var(--lime);border-radius:30px;padding:7px 11px;font-size:11px}
+main{max-width:760px;margin:auto;padding:18px 15px}
+h1{font-size:25px;margin:6px 0 5px}h2{font-size:18px;margin:0 0 13px}h3{font-size:15px;margin:0}
+.muted{color:var(--muted);font-size:12px;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:17px 0}.stat,.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:14px}.stat b{font-size:21px;display:block;margin-bottom:4px}.stat small{color:var(--muted);font-size:11px}
+.days{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}
+.day{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 8px;text-align:center;color:var(--txt);font-weight:800}
+.day small{display:block;color:var(--muted);font-weight:400;margin-top:5px}.day.active{border-color:var(--lime);background:#20291b;box-shadow:0 0 0 1px #b7f36b22}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.sectionhead{display:flex;align-items:center;justify-content:space-between;margin:23px 0 12px}
+.btn{border:0;border-radius:12px;padding:11px 14px;font-weight:800;background:var(--lime);color:#111;font-size:13px}.btn.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--txt)}.btn.danger{background:#3b2024;color:#ffaaaa}.btn.small{padding:8px 10px;font-size:12px}
+.exercise{display:grid;grid-template-columns:94px 1fr;gap:12px;padding:11px;background:var(--panel);border:1px solid var(--line);border-radius:16px;margin-bottom:10px}
+.thumb{height:94px;border-radius:12px;background:linear-gradient(145deg,#303640,#17191f);display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--lime);font-size:27px}
+.thumb img,.thumb video{width:100%;height:100%;object-fit:cover}.exinfo{min-width:0}.exinfo h3{margin:2px 0 6px}.tag{display:inline-block;background:#292e26;color:var(--lime);padding:4px 7px;border-radius:8px;font-size:10px;margin:0 0 6px 5px}
+.meta{font-size:11px;color:var(--muted);margin:4px 0 9px}.actions{display:flex;gap:6px;flex-wrap:wrap}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:5;background:#15171c;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 8px calc(9px + env(safe-area-inset-bottom))}
+nav button{background:none;border:0;color:var(--muted);font-size:11px;padding:5px 12px}nav button.active{color:var(--lime)}nav .ico{font-size:19px;display:block;margin-bottom:3px}
+.view{display:none}.view.active{display:block}
+input,select,textarea{width:100%;background:#101217;border:1px solid #343944;border-radius:11px;color:var(--txt);padding:12px;font:inherit;font-size:14px;outline:none}
+label{display:block;font-size:12px;color:var(--muted);margin:12px 0 6px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.formgrid .full{grid-column:1/-1}
+.modal{position:fixed;inset:0;background:#000b;z-index:10;display:none;align-items:flex-end;justify-content:center}.modal.open{display:flex}.sheet{width:100%;max-width:650px;max-height:92dvh;overflow:auto;background:#191b21;border:1px solid var(--line);border-radius:22px 22px 0 0;padding:20px 17px calc(24px + env(safe-area-inset-bottom))}
+.close{background:var(--panel2);border:0;color:white;border-radius:10px;padding:8px 12px}.empty{text-align:center;padding:28px 10px;color:var(--muted)}
+.progressbar{height:8px;border-radius:10px;background:#2b2e35;overflow:hidden;margin-top:8px}.progressbar i{display:block;height:100%;background:var(--lime);width:0}
+.timer{font-size:34px;font-weight:900;text-align:center;margin:16px}
+a{color:var(--blue)}.notice{background:#20291b;border:1px solid #465b32;color:#d8f6b5;border-radius:13px;padding:12px;font-size:12px;line-height:1.7;margin:12px 0}
+@media(min-width:650px){.sheet{border-radius:22px;margin-bottom:20px}.modal{align-items:center}}
+</style>
+</head>
+<body>
+<header><div class="top"><div><div class="brand">MY <span>GYM</span></div><div class="sub">خطتك. تمرينك. تطوّرك.</div></div><div class="pill">PERSONAL WORKOUT</div></div></header>
+<main>
+<section id="home" class="view active">
+  <div class="row"><div><h1>أهلاً بك 👋</h1><div class="muted">جاهز تتمرن اليوم؟</div></div><button class="btn small" onclick="openExercise()">＋ تمرين</button></div>
+  <div class="stats"><div class="stat"><b id="countEx">0</b><small>تمرين محفوظ</small></div><div class="stat"><b id="countDays">3</b><small>أيام تدريب</small></div><div class="stat"><b id="weightNow">77</b><small>وزنك (كغم)</small></div></div>
+  <h2>تقسيم التدريب</h2>
+  <div class="days">
+    <button class="day active" data-day="push" onclick="selectDay('push')">PUSH<small>صدر · كتف · ترايسبس</small></button>
+    <button class="day" data-day="pull" onclick="selectDay('pull')">PULL<small>ظهر · بايسبس</small></button>
+    <button class="day" data-day="legs" onclick="selectDay('legs')">LEGS<small>أرجل · بطن</small></button>
+  </div>
+  <div class="sectionhead"><div><h2 id="dayTitle">تمارين PUSH</h2><div class="muted" id="dayDesc">تمارين الدفع</div></div><button class="btn small" onclick="openExercise()">إضافة تمرين</button></div>
+  <div id="exerciseList"></div>
+</section>
+<section id="log" class="view">
+  <h1>سجل التمرين</h1><p class="muted">سجّل الوزن والتكرارات التي أنجزتها لتتابع تطورك.</p>
+  <div class="card"><label>اختر التمرين</label><select id="logExercise"></select><div class="formgrid"><div><label>الوزن (كغم)</label><input id="logWeight" type="number" min="0" step="0.5" placeholder="مثلاً 20"></div><div><label>التكرارات</label><input id="logReps" type="number" min="1" placeholder="مثلاً 12"></div><div><label>المجموعات المكتملة</label><input id="logSets" type="number" min="1" value="3"></div><div><label>التاريخ</label><input id="logDate" type="date"></div></div><button class="btn" style="width:100%;margin-top:14px" onclick="saveLog()">حفظ السجل</button></div>
+  <div class="sectionhead"><h2>آخر سجلاتك</h2></div><div id="logList"></div>
+</section>
+<section id="progress" class="view">
+  <h1>تطوّرك</h1><p class="muted">تابع أوزانك وسجلاتك مع الوقت.</p>
+  <div class="stats"><div class="stat"><b id="totalLogs">0</b><small>جلسة مسجلة</small></div><div class="stat"><b id="lastLift">—</b><small>آخر وزن مسجل</small></div><div class="stat"><b id="personalWeight">77</b><small>وزنك الحالي</small></div></div>
+  <div class="card"><h2>تحديث وزن الجسم</h2><label>وزنك الحالي (كغم)</label><input id="bodyWeight" type="number" step="0.1" value="77"><button class="btn" style="margin-top:12px" onclick="saveBodyWeight()">حفظ الوزن</button></div>
+  <div class="sectionhead"><h2>سجل التقدم</h2></div><div id="progressList"></div>
+</section>
+<section id="settings" class="view">
+  <h1>الإعدادات</h1><p class="muted">بيانات التطبيق محفوظة محلياً على هذا الجهاز.</p>
+  <div class="card"><h2>بياناتك</h2><label>اسم التطبيق</label><input value="MY GYM" disabled><label>وزنك الابتدائي (كغم)</label><input id="settingWeight" type="number" value="77" step="0.1"><button class="btn" style="margin-top:12px" onclick="saveSettings()">حفظ</button></div>
+  <div class="card" style="margin-top:12px"><h2>نسخة احتياطية</h2><p class="muted">صدّر تمارينك وسجلاتك للاحتفاظ بنسخة احتياطية.</p><button class="btn secondary" onclick="exportData()">تصدير البيانات</button> <button class="btn danger" onclick="resetData()">مسح جميع البيانات</button></div>
+  <div class="notice">ملاحظة: الصور والفيديوهات التي تضيفها كرابط تحتاج اتصالاً بالإنترنت. بيانات التمارين والأوزان محفوظة على جهازك.</div>
+</section>
+</main>
+<nav>
+<button class="active" data-view="home" onclick="showView('home',this)"><span class="ico">⌂</span>الرئيسية</button>
+<button data-view="log" onclick="showView('log',this)"><span class="ico">＋</span>تسجيل</button>
+<button data-view="progress" onclick="showView('progress',this)"><span class="ico">↗</span>التقدم</button>
+<button data-view="settings" onclick="showView('settings',this)"><span class="ico">⚙</span>الإعدادات</button>
+</nav>
+<div class="modal" id="exerciseModal" onclick="if(event.target===this)closeExercise()"><div class="sheet">
+  <div class="row"><h2 id="modalTitle">إضافة تمرين جديد</h2><button class="close" onclick="closeExercise()">إغلاق</button></div>
+  <input type="hidden" id="editId">
+  <div class="formgrid">
+    <div class="full"><label>اسم التمرين</label><input id="exName" placeholder="مثلاً Incline Dumbbell Press"></div>
+    <div><label>اليوم</label><select id="exDay"><option value="push">PUSH</option><option value="pull">PULL</option><option value="legs">LEGS</option></select></div>
+    <div><label>العضلة المستهدفة</label><input id="exMuscle" placeholder="صدر علوي"></div>
+    <div><label>المجموعات</label><input id="exSets" type="number" value="3" min="1"></div>
+    <div><label>التكرارات</label><input id="exReps" placeholder="8–12"></div>
+    <div class="full"><label>رابط صورة التمرين (اختياري)</label><input id="exImage" type="url" placeholder="https://..."></div>
+    <div class="full"><label>رابط فيديو التمرين (اختياري)</label><input id="exVideo" type="url" placeholder="https://..."></div>
+    <div class="full"><label>ملاحظاتك</label><textarea id="exNotes" rows="2" placeholder="ملاحظات الأداء أو وضعية الجسم"></textarea></div>
+  </div>
+  <button class="btn" style="width:100%;margin-top:16px" onclick="saveExercise()">حفظ التمرين</button>
+</div></div>
+<div class="modal" id="detailModal" onclick="if(event.target===this)this.classList.remove('open')"><div class="sheet" id="detailContent"></div></div>
+<script>
+const seed=[
+{id:'p1',day:'push',name:'Incline Dumbbell Press',muscle:'صدر علوي',sets:3,reps:'8–12',image:'',video:'',notes:'ميل المقعد 30 درجة تقريباً.'},
+{id:'p2',day:'push',name:'Incline Chest Press Machine',muscle:'صدر علوي',sets:3,reps:'10–12',image:'',video:'',notes:'تحكم بالحركة ولا تقفل المرفقين بقوة.'},
+{id:'p3',day:'push',name:'Dumbbell Front Raise',muscle:'كتف أمامي',sets:2,reps:'12–15',image:'',video:'',notes:''},
+{id:'p4',day:'push',name:'Dumbbell Lateral Raise',muscle:'كتف جانبي',sets:3,reps:'12–15',image:'',video:'',notes:''},
+{id:'p5',day:'push',name:'Triceps Rope Pushdown',muscle:'ترايسبس',sets:3,reps:'10–15',image:'',video:'',notes:''}
+];
+let data=JSON.parse(localStorage.getItem('mygym_data')||'null')||{exercises:seed,logs:[],bodyWeight:77};
+let currentDay='push';
+const save=()=>localStorage.setItem('mygym_data',JSON.stringify(data));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function selectDay(day){currentDay=day;document.querySelectorAll('.day').forEach(b=>b.classList.toggle('active',b.dataset.day===day));document.getElementById('dayTitle').textContent='تمارين '+day.toUpperCase();document.getElementById('dayDesc').textContent={push:'صدر · كتف · ترايسبس',pull:'ظهر · بايسبس · كتف خلفي',legs:'أرجل · بطن'}[day];renderExercises()}
+function renderExercises(){let list=data.exercises.filter(x=>x.day===currentDay);document.getElementById('exerciseList').innerHTML=list.length?list.map(x=>`<article class="exercise"><div class="thumb">${x.image?`<img src="${esc(x.image)}" alt="">`:'🏋️'}</div><div class="exinfo"><h3>${esc(x.name)}</h3><span class="tag">${esc(x.muscle||'عضلات')}</span><div class="meta">${x.sets} مجموعات × ${esc(x.reps||'—')} تكرار</div><div class="actions"><button class="btn small" onclick="showDetail('${x.id}')">التفاصيل</button><button class="btn secondary small" onclick="editExercise('${x.id}')">تعديل</button><button class="btn danger small" onclick="deleteExercise('${x.id}')">حذف</button></div></div></article>`).join(''):'<div class="empty">لا توجد تمارين هنا بعد.<br>اضغط «إضافة تمرين» للبدء.</div>';document.getElementById('countEx').textContent=data.exercises.length;refreshSelect()}
+function openExercise(){document.getElementById('exerciseModal').classList.add('open');document.getElementById('modalTitle').textContent='إضافة تمرين جديد';document.getElementById('editId').value='';['exName','exMuscle','exImage','exVideo','exNotes'].forEach(id=>document.getElementById(id).value='');document.getElementById('exDay').value=currentDay;document.getElementById('exSets').value=3;document.getElementById('exReps').value='8–12'}
+function closeExercise(){document.getElementById('exerciseModal').classList.remove('open')}
+function saveExercise(){let name=document.getElementById('exName').value.trim();if(!name){alert('اكتب اسم التمرين أولاً');return}let id=document.getElementById('editId').value;let x={id:id||'e'+Date.now(),name,day:document.getElementById('exDay').value,muscle:document.getElementById('exMuscle').value,sets:+document.getElementById('exSets').value||3,reps:document.getElementById('exReps').value,image:document.getElementById('exImage').value,video:document.getElementById('exVideo').value,notes:document.getElementById('exNotes').value};if(id)data.exercises=data.exercises.map(a=>a.id===id?x:a);else data.exercises.push(x);save();closeExercise();selectDay(x.day);renderAll()}
+function editExercise(id){let x=data.exercises.find(a=>a.id===id);if(!x)return;openExercise();document.getElementById('modalTitle').textContent='تعديل التمرين';document.getElementById('editId').value=id;for(let [k,v] of Object.entries({exName:x.name,exDay:x.day,exMuscle:x.muscle,exSets:x.sets,exReps:x.reps,exImage:x.image,exVideo:x.video,exNotes:x.notes}))document.getElementById(k).value=v||''}
+function deleteExercise(id){if(confirm('هل تريد حذف هذا التمرين؟')){data.exercises=data.exercises.filter(x=>x.id!==id);save();renderAll()}}
+function showDetail(id){let x=data.exercises.find(a=>a.id===id);if(!x)return;document.getElementById('detailContent').innerHTML=`<div class="row"><h2>${esc(x.name)}</h2><button class="close" onclick="document.getElementById('detailModal').classList.remove('open')">إغلاق</button></div><p class="muted">${esc(x.muscle)} · ${x.sets} مجموعات × ${esc(x.reps)}</p>${x.image?`<img src="${esc(x.image)}" style="width:100%;border-radius:14px;max-height:260px;object-fit:cover">`:''}${x.video?`<p><a href="${esc(x.video)}" target="_blank" rel="noopener">▶ مشاهدة فيديو التمرين</a></p>`:''}<p>${esc(x.notes||'لا توجد ملاحظات.')}</p><button class="btn" onclick="document.getElementById('detailModal').classList.remove('open');editExercise('${x.id}')">تعديل التمرين</button>`;document.getElementById('detailModal').classList.add('open')}
+function showView(v,btn){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('active',x.id===v));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===btn));if(v==='log')renderLogs();if(v==='progress')renderProgress()}
+function refreshSelect(){let s=document.getElementById('logExercise');let old=s.value;s.innerHTML=data.exercises.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('');if(data.exercises.some(x=>x.id===old))s.value=old}
+function saveLog(){let id=document.getElementById('logExercise').value;if(!id){alert('أضف تمريناً أولاً');return}data.logs.unshift({id:'l'+Date.now(),exerciseId:id,weight:+document.getElementById('logWeight').value||0,reps:+document.getElementById('logReps').value||0,sets:+document.getElementById('logSets').value||3,date:document.getElementById('logDate').value||new Date().toISOString().slice(0,10)});save();document.getElementById('logWeight').value='';document.getElementById('logReps').value='';renderLogs();renderAll();alert('تم حفظ سجل التمرين')}
+function renderLogs(){document.getElementById('logDate').value ||= new Date().toISOString().slice(0,10);document.getElementById('logList').innerHTML=data.logs.slice(0,12).map(l=>{let x=data.exercises.find(a=>a.id===l.exerciseId);return `<div class="card" style="margin-bottom:8px"><div class="row"><b>${esc(x?.name||'تمرين محذوف')}</b><span class="muted">${esc(l.date)}</span></div><p class="muted">${l.weight} كغم · ${l.sets} مجموعات · ${l.reps} تكرار</p></div>`}).join('')||'<div class="empty">لا توجد سجلات بعد.</div>'}
+function renderProgress(){document.getElementById('totalLogs').textContent=data.logs.length;document.getElementById('personalWeight').textContent=data.bodyWeight;document.getElementById('bodyWeight').value=data.bodyWeight;document.getElementById('progressList').innerHTML=data.logs.slice(0,20).map(l=>{let x=data.exercises.find(a=>a.id===l.exerciseId);return `<div class="card" style="margin-bottom:8px"><b>${esc(x?.name||'تمرين')}</b><div class="muted">${l.date} · ${l.weight} كغم × ${l.reps} تكرار · ${l.sets} مجموعات</div></div>`}).join('')||'<div class="empty">سجّل أول تمرين لتبدأ متابعة تقدمك.</div>';document.getElementById('lastLift').textContent=data.logs.length?data.logs[0].weight+' كغم':'—'}
+function saveBodyWeight(){data.bodyWeight=+document.getElementById('bodyWeight').value||77;save();renderAll();alert('تم حفظ وزنك')}
+function saveSettings(){data.bodyWeight=+document.getElementById('settingWeight').value||77;save();renderAll();alert('تم الحفظ')}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='my-gym-backup.json';a.click();URL.revokeObjectURL(a.href)}
+function resetData(){if(confirm('سيتم حذف جميع التمارين والسجلات. هل أنت متأكد؟')){localStorage.removeItem('mygym_data');data={exercises:[],logs:[],bodyWeight:77};save();renderAll()}}
+function renderAll(){selectDay(currentDay);document.getElementById('countEx').textContent=data.exercises.length;document.getElementById('weightNow').textContent=data.bodyWeight;document.getElementById('settingWeight').value=data.bodyWeight;renderLogs();renderProgress()}
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+renderAll();
+</script>
+</body></html>
